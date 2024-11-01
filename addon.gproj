@@ -1,0 +1,8 @@
+GameProject {
+ ID "TimeMapMarker"
+ GUID "62C2B68771445D49"
+ TITLE "TimeMapMarker"
+ Dependencies {
+  "58D0FB3206B6F859"
+ }
+}
