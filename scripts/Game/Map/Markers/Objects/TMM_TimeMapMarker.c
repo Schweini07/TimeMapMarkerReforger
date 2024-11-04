@@ -11,7 +11,7 @@ modded class SCR_MapMarkerBase
 		m_sCustomText = text + "\nUTC " + GetUTCTime();
 	}
 	
-	// Sets marker text without adding local time if necessary
+	// Set marker text without adding local time if necessary
 	void SetCustomText(string text, bool newTime)
 	{
 		if (!newTime)
@@ -32,7 +32,7 @@ modded class SCR_MapMarkerBase
 		return m_sInputText;
 	}
 	
-	// Gets the utc time in hh-mm
+	// Get the utc time in hh-mm
 	string GetUTCTime()
 	{
 		string timeString = SCR_DateTimeHelper.GetTimeUTC();

@@ -1,46 +1,5 @@
 modded class SCR_MapMarkersUI
 {
-	override protected void OnInsertMarker(bool isLocal)
-	{
-		float wX, wY;
-		m_MapEntity.GetMapCenterWorldPosition(wX, wY);
-		
-		SCR_MapMarkerBase marker = new SCR_MapMarkerBase();
-		
-		if (m_bIsMilitaryMarker)
-		{
-			marker.SetType(SCR_EMapMarkerType.PLACED_MILITARY);
-			marker.SetFlags(m_eMilitaryTypeAIcon | m_eMilitaryTypeBIcon);
-			marker.SetMarkerConfigID(m_iSelectedDimensionID * 100 + m_iSelectedFactionID); // combination of faction and dimension id
-		}
-		else 
-		{
-			marker.SetType(SCR_EMapMarkerType.PLACED_CUSTOM);
-			marker.SetRotation(m_fRotation);
-			marker.SetColorEntry(m_iSelectedColorID);
-			marker.SetIconEntry(m_iSelectedIconID);
-		}
-		
-		marker.SetCustomText(m_EditBoxComp.GetValue());
-		marker.SetWorldPos(wX, wY);
-		
-		if (!isLocal)
-		{
-			FactionManager factionManager = GetGame().GetFactionManager();
-			if (factionManager)
-			{
-				Faction markerOwnerFaction = SCR_FactionManager.SGetPlayerFaction(GetGame().GetPlayerController().GetPlayerId());
-				if (markerOwnerFaction)
-					marker.AddMarkerFactionFlags(factionManager.GetFactionIndex(markerOwnerFaction));
-			}
-		}
-		
-		m_MarkerMgr.InsertStaticMarker(marker, isLocal);
-		m_OnCustomMarkerPlaced.Invoke(wX, wY, isLocal);
-		
-		CleanupMarkerEditWidget();
-	}
-	
 	override protected void OnDragEnd(Widget widget, bool wasDragged)
 	{		
 		SCR_MapMarkerBase marker = m_MarkerMgr.GetMarkerByWidget(widget);
@@ -92,7 +51,7 @@ modded class SCR_MapMarkersUI
 		}
 	}
 	
-	protected void OnInputMapSelect(float value, EActionTrigger reason)
+	override protected void OnInputMapSelect(float value, EActionTrigger reason)
 	{
 		if ((m_CursorModule.GetCursorState() & SCR_MapCursorModule.STATE_POPUP_RESTRICTED) != 0)
 			return;
